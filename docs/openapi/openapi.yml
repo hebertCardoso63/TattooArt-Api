@@ -1,0 +1,17 @@
+openapi: "3.0.3"
+info:
+  title: TattooArt API
+  description: Documentação Tattoo Art
+  version: "1.0"
+servers:
+  - url: http://127.0.0.1:{Port}
+    description: Local
+    variables:
+      Port:
+        default: "3000"
+paths:
+  # Auth
+  /auth/register:
+    $ref: ./paths/auth/register.yml
+  /auth/login:
+    $ref: ./paths/auth/login.yml

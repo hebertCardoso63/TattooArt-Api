@@ -1,0 +1,7 @@
+schema:
+type: object
+properties:
+  token:
+    schema:
+    type: string
+    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tZV91c3VhcmlvIjoiaGViZXJ0IiwiaWF0IjoxNzIwNDk3MDcwLCJleHAiOjE3MjA1MDA2NzB9.qF1Xyn-qellgrUhj1XGkGIhCj_Xg3Re8gYfV3ZSfGWQ"

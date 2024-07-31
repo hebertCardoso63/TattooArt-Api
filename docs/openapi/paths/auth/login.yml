@@ -1,0 +1,29 @@
+post:
+  tags:
+    - Autenticação
+  summary: Login
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            nome_usuario:
+              type: string
+              example: 'hebert'
+              required: true
+            senha:
+              type: string
+              example: '123456'
+              required: true
+  responses:
+    "200":
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/auth/login_response.yml"
+    '400':
+      description: Erro na requisição
+    '401':
+      description: Credenciais inválidas
