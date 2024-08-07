@@ -20,7 +20,8 @@ export interface DadosCadastraisTatuador {
     experiencia: number;
     status: string;
     tipo: string;
-    imagem_perfil: string;
+    imagem_perfil?: string;
+    imagem_capa?: string;
     estudio_id?: string;
     estilo_tatuagem?: string[];
     redes_sociais?: Record<string, string>;
