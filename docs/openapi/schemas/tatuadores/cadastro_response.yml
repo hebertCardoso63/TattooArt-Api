@@ -1,0 +1,9 @@
+schema:
+type: object
+properties:
+  mensagem:
+    type: string
+    example: "Tatuador criado com sucesso"
+  id_registro:
+    type: string
+    example: "4efc2315-1327-42f4-8c77-c4a7cf7f51bc"

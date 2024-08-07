@@ -1,0 +1,35 @@
+schema:
+type: object
+properties:
+  id:
+    type: string
+    example: "aa6ec8c2-9acf-43c1-8c9b-a72d9b1a7ba6"
+  experiencia:
+    type: integer
+    example: 72
+  status:
+    type: string
+    example: "ativo"
+  tipo:
+    type: string
+    example: "PROPRIETARIO"
+  redes_sociais:
+    type: object
+    properties:
+      instagram:
+        type: string
+        example: "estudioXX"
+  imagem_perfil:
+    type: string
+    example: "https://img.freepik.com/fotos-gratis/jovem-casual-gritando-no-estudio_155003-13312.jpg?size=626&ext=jpg"
+  nome:
+    type: string
+    example: "Matheus Dourado Tattoo"
+  estilo_tatuagem:
+    type: array
+    items:
+      type: string
+    example: null
+  imagem_capa:
+    type: string
+    example: null

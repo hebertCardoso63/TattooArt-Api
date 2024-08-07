@@ -15,3 +15,9 @@ paths:
     $ref: ./paths/auth/register.yml
   /auth/login:
     $ref: ./paths/auth/login.yml
+
+  # Tatuadores
+  /api/tatuadores:
+    $ref: ./paths/tatuadores/cadastro.yml
+  /api/tatuadores/{id}:
+    $ref: ./paths/tatuadores/buscarPorId.yml

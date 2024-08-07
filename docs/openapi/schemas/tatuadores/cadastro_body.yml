@@ -1,0 +1,48 @@
+schema:
+type: object
+properties:
+  nome:
+    type: string
+    example: "Matheus Dourado Tattoo"
+    required: true
+  experiencia:
+    type: integer
+    example: 72
+    required: true
+  estudio_id:
+    type: integer
+    example: 72
+    required: false
+  status:
+    type: string
+    example: "ativo"
+    required: true
+  tipo:
+    type: string
+    example: "PROPRIETARIO"
+    required: true
+  estilo_tatuagem:
+    type: array
+    items:
+      type: string
+      example: "Realismo, Escrita, Geometria"
+    required: false
+  imagem_perfil:
+    type: string
+    example: "https://images.unsplash.com/photo-1722689417442-65b2a3012952?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    required: false
+  imagem_capa:
+    type: string
+    example: "https://images.unsplash.com/photo-1722689417442-65b2a3012952?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    required: false
+  redes_sociais:
+    type: object
+    properties:
+      facebook:
+        type: string
+      instagram:
+        type: string
+      twitter:
+        type: string
+      linkedin:
+    required: false

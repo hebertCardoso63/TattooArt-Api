@@ -1,0 +1,36 @@
+get:
+  tags:
+    - Tatuadores
+  summary: Buscar Tatuador por id
+  parameters:
+    - in: path
+      name: id
+      required: true
+      schema:
+        type: string
+      description: ID do tatuador
+
+  responses:
+    "200":
+      description: Tatuador cadastrado com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/tatuadores/buscarPorId_response.yml"
+    
+    '400':
+      description: Tatuador não encontrado
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              mensagem:
+                type: string
+                example: "Tatuador não encontrado"
+    '401':
+      description: Credenciais inválidas
+    '404':
+      description: Tatuador não encontrado
+    '500':
+      description: Erro ao buscar Tatuador

@@ -1,0 +1,24 @@
+post:
+  tags:
+    - Tatuadores
+  summary: Cadastro
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/tatuadores/cadastro_body.yml"
+
+  responses:
+    "201":
+      description: Tatuador cadastrado com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/tatuadores/cadastro_response.yml"
+    
+    '400':
+      description: Campos obrigatórios não preenchidos
+    '401':
+      description: Credenciais inválidas
+    '500':
+      description: Erro ao cadastrar tatuador
