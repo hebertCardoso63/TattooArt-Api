@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { controllerTatuador } from '../controllers/tatuador.controller';
+import { validateBuscarTatuador, validateTatuadorCadastro } from '../validators/tatuador.validator';
 const router = Router();
 
 router
@@ -9,10 +10,12 @@ router
     )
     .post(
         '/tatuadores',
+        validateTatuadorCadastro,
         controllerTatuador.cadastrarTatuador
     )
     .get(
         '/tatuadores/:id',
+        validateBuscarTatuador,
         controllerTatuador.buscarTatuador
     )
     .patch(
