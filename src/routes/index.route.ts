@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
 import auth from './auth.route';
-import { validateAuth } from '../validators/auth.validator'
 import tatuador from './tatuador.route';
+import { validateAuth } from '../validators/auth.validator'
 import { authenticate } from '../middlewares/auth.middleware';
 
 
