@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { tatuador } from "../services/tatuador.service";
+import { tatuadorService } from "../services/tatuador.service";
 import { DadosCadastraisTatuador, Tatuador } from "../models/tatuador.model";
 
 
@@ -15,7 +15,7 @@ class ControllerTatuador {
         const idTatuador = req.params.id;
         const idToken = req.usuario?.id;
 
-        const success = await tatuador.deletar(idTatuador, idToken!);
+        const success = await tatuadorService.deletar(idTatuador, idToken!);
 
         if (!success) return res.status(400).send('Tatuador não encontrado')
 
@@ -23,7 +23,7 @@ class ControllerTatuador {
     }
 
     public async listarTatuadores(req: Request, res: Response) {
-        const lista = await tatuador.buscar();
+        const lista = await tatuadorService.buscar();
 
         if (lista.length === 0) return res.status(200).send([]);
 
@@ -38,7 +38,7 @@ class ControllerTatuador {
         
         if (!id) return res.status(400).json({ message: "ID do tatuador não fornecido" });
 
-        const tatuadorBuscado = await tatuador.atualizarTatuador(id, novosDados);
+        const tatuadorBuscado = await tatuadorService.atualizarTatuador(id, novosDados);
 
         if (!tatuadorBuscado) return res.status(404).json({ message: "Tatuador não encontrado" });
 
@@ -46,9 +46,7 @@ class ControllerTatuador {
     }
 
     public async buscarTatuador(req: Request, res: Response, next: NextFunction) {
-        if (!req.params.id) return res.status(400).json({ message: "ID do tatuador não fornecido" });
-
-        const tatuadorBuscado = await tatuador.buscarPorId(req.params.id);
+        const tatuadorBuscado = await tatuadorService.buscarPorId(req.params.id);
 
         if (!tatuadorBuscado) return res.status(404).json({ message: "Tatuador não encontrado" });
 
@@ -56,23 +54,24 @@ class ControllerTatuador {
     }
 
     public async cadastrarTatuador(req: Request, res: Response, next: NextFunction) {
-        if (!req.usuario) return res.status(401).json({ message: "Unauthorized" });
-
         const usuario = req.usuario;
 
         const dadosTatuador: DadosCadastraisTatuador = {
-            usuario_id: usuario.id,
+            usuario_id: usuario?.id!,
             nome: req.body.nome,
             experiencia: req.body.experiencia,
             status: req.body.status,
             tipo: req.body.tipo,
             imagem_perfil: req.body.imagem_perfil,
+            imagem_capa: req.body.imagem_capa,
+            estilo_tatuagem: req.body.estilo_tatuagem,
+            redes_sociais: req.body.redes_sociais,
         };
 
         try {
-            const idRegistro = await tatuador.cadastrar(dadosTatuador);
+            const idRegistro = await tatuadorService.cadastrar(dadosTatuador);
 
-            return res.status(201).json({ message: 'Tatuador criado com sucesso', id_registro: idRegistro });
+            return res.status(201).json({ message: 'Tatuador cadastrado com sucesso', id_registro: idRegistro });
         } catch (err) {
             return res.status(500).send('Erro ao cadastrar tatuador');
         }
