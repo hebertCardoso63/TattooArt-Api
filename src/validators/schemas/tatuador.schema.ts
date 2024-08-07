@@ -1,6 +1,8 @@
 import Joi from 'joi';
 
 
+export const buscarTatuador = Joi.string().uuid().required();
+
 export const cadastrarTatuadorSchema = Joi.object({
     nome: Joi.string().required().messages({
         'string.empty': 'O nome é obrigatório',
@@ -18,10 +20,6 @@ export const cadastrarTatuadorSchema = Joi.object({
     tipo: Joi.string().required().messages({
         'string.empty': 'O tipo é obrigatório',
         'any.required': 'O tipo é obrigatório',
-    }),
-    usuario_id: Joi.string().uuid().required().messages({
-        'string.guid': 'O ID do usuário deve ser um UUID válido',
-        'any.required': 'O ID do usuário é obrigatório',
     }),
     estudio_id: Joi.string().uuid().optional().messages({
         'string.guid': 'O ID do estúdio deve ser um UUID válido',
