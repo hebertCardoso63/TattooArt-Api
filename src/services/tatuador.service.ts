@@ -4,7 +4,7 @@ import {
     Tatuador as TatuadorModel,
 } from "../models/tatuador.model";
 
-class Tatuador {
+class TatuadorService {
     private async verificarExistencia(nomeUsuario: string): Promise<boolean> {
         const usuario = await this.encontrarTatuador(nomeUsuario)
         
@@ -88,4 +88,4 @@ class Tatuador {
     }
 }
 
-export const tatuador = new Tatuador();
+export const tatuadorService = new TatuadorService();
