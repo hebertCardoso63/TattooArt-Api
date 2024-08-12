@@ -10,7 +10,7 @@ export interface DadosCadastrais {
     senha: string;
 }
 
-export interface Usuario {
+export interface UsuarioModel {
     id: UUID;
     nome: string;
     senha: string;
