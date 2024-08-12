@@ -1,0 +1,24 @@
+schema:
+type: object
+properties:
+  nome: 
+    type: string
+    example: "John Doe"
+  email: 
+    type: string
+    example: "johndoe@email.com"
+  cpf: 
+    type: string
+    example: "12345678910"
+  telefone_celular:
+    type: string
+    example: "44900000000"
+  rg:
+    type: string
+    example: "123456789"
+  endereco:
+    type: string
+    example: "Av. Paulista, 1000"
+  data_criacao:
+    type: string
+    example: "2022-01-01T00:00:00.000Z"

@@ -21,3 +21,11 @@ paths:
     $ref: ./paths/tatuadores/cadastro.yml
   /api/tatuadores/{id}:
     $ref: ./paths/tatuadores/buscarPorId.yml
+
+  # Usuários
+  /api/usuarios/perfil:
+    $ref: ./paths/usuarios/perfil.yml
+  /api/usuarios/excluir-perfil:
+    $ref: ./paths/usuarios/excluir-perfil.yml    
+  /api/usuarios/atualizar-perfil:
+    $ref: ./paths/usuarios/atualizar-perfil.yml

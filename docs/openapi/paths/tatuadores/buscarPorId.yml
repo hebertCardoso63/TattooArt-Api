@@ -19,7 +19,7 @@ get:
             $ref: "../../schemas/tatuadores/buscarPorId_response.yml"
     
     '400':
-      description: Tatuador não encontrado
+      description: Bad request
       content:
         application/json:
           schema:

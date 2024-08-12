@@ -1,0 +1,20 @@
+patch:
+  tags:
+    - Usuario
+  summary: Atualizar perfil de um usuário
+  parameters:
+    - name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+  
+  responses:
+    "200":
+      description: Perfil atualizado com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/usuarios/perfil/perfil_response.yml"
+    "204":
+      description: Nada atualizado

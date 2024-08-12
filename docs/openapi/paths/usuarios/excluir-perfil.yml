@@ -1,0 +1,14 @@
+delete:
+  tags:
+    - Usuario
+  summary: Excluir perfil de um usuário
+  parameters:
+    - name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+  
+  responses:
+    "204":
+      description: Perfil excluido com sucesso
