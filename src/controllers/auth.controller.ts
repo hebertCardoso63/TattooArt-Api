@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { usuario } from '../services/usuario.service'
-import { DadosCadastrais, Usuario, PayloadToken } from '../models/usuario.model';
+import { usuarioService } from '../services/usuario.service'
+import { DadosCadastrais, UsuarioModel, PayloadToken } from '../models/usuario.model';
 import { hashPassword, comparePassword } from '../utils/hash.util';
 import { generateToken } from '../utils/jwt.util';
 
@@ -20,7 +20,7 @@ export async function register(req: Request, res: Response) {
             senha: hashedPassword,
         }
 
-        const idUsuario = await usuario.cadastrar(dadosCadastrais);
+        const idUsuario = await usuarioService.cadastrar(dadosCadastrais);
 
         if (!idUsuario) {
             return res.status(401).send('Nome de usuário já existe');
@@ -40,7 +40,7 @@ export async function login(req: Request, res: Response) {
     }
 
     try {
-        const user: false | Usuario = await usuario.encontrarUsuario(nome_usuario);
+        const user: false | UsuarioModel = await usuarioService.encontrarUsuario(nome_usuario);
 
         if (!user || !(await comparePassword(senha, user.senha))) {
             return res.status(401).json({ mensagem: 'Credenciais inválidas', token: null });
