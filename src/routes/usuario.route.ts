@@ -7,21 +7,21 @@ const router = Router();
 
 router
     .get(
-        '/usuarios/perfil', 
+        '/usuarios/perfil/:id', 
         [
             usuarioController.getBuscarContaUsuario,
             internalErrorsMiddleware,
         ]
     )
     .delete(
-        '/usuarios/excluir-perfil',
+        '/usuarios/excluir-perfil/:id',
         [
             usuarioController.deleteContaUsuario,
             internalErrorsMiddleware,
         ]
     )
     .patch(
-        '/usuarios/atualizar-perfil', 
+        '/usuarios/atualizar-perfil/:id', 
         [
             validateUsuariosAtualizarPerfil,
             usuarioController.patchContaUsuario,
