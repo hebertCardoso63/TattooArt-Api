@@ -2,12 +2,14 @@ import { Request, Response, NextFunction } from "express";
 import { tatuagemService } from "../services/tatuagem.service";
 import { DadosCadastraisTatuador } from "../models/tatuador.model";
 import { inputCadastroTatuagem } from "../types/tatuagem/input-cadastro.interface";
-
+import { IPaginateParams, IPagination, IWithPagination } from "knex-paginate";
+import { TatuagemModel } from "../models/tatuagem.model";
+import { json } from "body-parser";
 
 class TatuagemController {
     constructor() {
         this.cadastrarTatuagem = this.cadastrarTatuagem.bind(this);
-        // this.listarTatuagens = this.listarTatuagens.bind(this);
+        this.listarTatuagens = this.listarTatuagens.bind(this);
         // this.editarTatuagem = this.editarTatuagem.bind(this);
         // this.buscarTatuagem = this.buscarTatuagem.bind(this);
         // this.deletarTatuagem = this.deletarTatuagem.bind(this);
@@ -37,13 +39,29 @@ class TatuagemController {
         }
     }
 
-    // public async listarTatuagens(req: Request, res: Response) {
-    //     const lista = await tatuagemService.buscar();
+    public async listarTatuagens(req: Request, res: Response) {
+        const filtro = req.query.filtro as string;
 
-    //     if (lista.length === 0) return res.status(200).send([]);
+        let filtroParseado: IPaginateParams | undefined = undefined;
 
-    //     return res.status(200).json(lista);
-    // }
+        if (filtro) {
+            filtroParseado = JSON.parse(filtro)
+        }
+
+        const usuario = req.usuario;
+
+        let usuarioId = usuario?.id;
+        let tatuadorId;
+
+        if (usuario?.tatuador) {
+            tatuadorId = usuario?.tatuador.id;
+            usuarioId = undefined;
+        }
+
+        const lista = await tatuagemService.buscar(usuarioId, tatuadorId, filtroParseado);
+
+        return res.status(200).json(lista);
+    }
 
     // public async deletarTatuagem(req: Request, res: Response) {
     //     const idTatuador = req.params.id;
