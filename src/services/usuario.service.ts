@@ -18,6 +18,7 @@ class UsuarioService {
         const usuario: UsuarioModel = await knex('usuarios')
             .select(['*'])
             .where('nome', nomeUsuario)
+            .whereNull('data_exclusao')
             .first();
 
         if (!usuario) {
@@ -67,7 +68,7 @@ class UsuarioService {
 
     public async excluiContaUsuario(userId: string): Promise<void> {
         await knex({ u: 'usuarios' })
-          .update({ data_exclusao: knex.fn.now() })
+          .update({ data_exclusao: knex.fn.now(), nome: null })
           .where('id', userId)
           .whereNull('data_exclusao')
           .catch((e) => {
