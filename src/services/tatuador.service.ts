@@ -61,14 +61,27 @@ class TatuadorService {
         return usuario;
     }
 
-    public async buscarPorId(id: string): Promise<boolean | TatuadorModel> {
+    public async buscarPorUsuarioId(id: string): Promise<null | TatuadorModel> {
+        const tatuador = await knex('tatuadores')
+           .select(['*'])
+           .where('usuario_id', id)
+           .first();
+
+        if (!tatuador) {
+            return null;
+        }
+
+        return tatuador;
+    }
+
+    public async buscarPorId(id: string): Promise<null | TatuadorModel> {
         const tatuador = await knex('tatuadores')
            .select(['*'])
            .where('id', id)
            .first();
 
         if (!tatuador) {
-            return false;
+            return null;
         }
 
         return tatuador;

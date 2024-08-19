@@ -14,13 +14,13 @@ router
             internalErrorsMiddleware,
         ]
     )
-    // .get(
-    //     '/tatuagens', 
-    //     [
-    //         tatuagemController.listarTatuagens,
-    //         internalErrorsMiddleware,
-    //     ]
-    // )
+    .get(
+        '/tatuagens', 
+        [
+            tatuagemController.listarTatuagens,
+            internalErrorsMiddleware,
+        ]
+    )
     // .get(
     //     '/tatuagens/:id', 
     //     [

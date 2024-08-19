@@ -1,7 +1,11 @@
 import knex from "../factories/knex.factory";
 import { TatuagemModel } from "../models/tatuagem.model";
 import { inputCadastroTatuagem } from "../types/tatuagem/input-cadastro.interface";
+import { attachPaginate } from 'knex-paginate';
+import { IPaginateParams, IPagination, IWithPagination } from "knex-paginate";
+import { UUID } from "crypto";
 
+attachPaginate();
 class TatuagemService {
     public async cadastrar(dadosCriacaoTatuagem: inputCadastroTatuagem): Promise<number | false>{
         const [ dadosTatuagem ] = await knex('tatuagens')
@@ -10,14 +14,28 @@ class TatuagemService {
         return dadosTatuagem.id;
     }
 
-    // public async buscar(): Promise<TatuadorModel[]> {
-    //     const tatuadores: TatuadorModel[] = await knex('tatuadores')
-    //        .select(['*'])
-    //        .whereNull('data_exclusao')
-    //        .orderBy('data_criacao', 'desc');
+    public async buscar(usuarioId?: UUID, tatuadorId?: UUID, filtro?: IPaginateParams): Promise<IWithPagination<TatuagemModel> | TatuagemModel[]> {
+        console.log(66, usuarioId, tatuadorId, filtro);
+        const tatuagens = await knex('tatuagens')
+           .select(['*'])
+           .whereNull('data_exclusao')
+           .orderBy('data_criacao', 'desc');
 
-    //     return tatuadores;
-    // }
+        // if (usuarioId) {
+        //     tatuagens.where('criado_por', usuarioId);
+        // }
+        
+        // if (tatuadorId) {
+        //     tatuagens.where('criado_por', tatuadorId);
+        // }
+
+        // if (filtro) {
+        //     return tatuagens.paginate(filtro);
+        // }
+
+        // console.log(88, (await tatuagens).toString());
+        return tatuagens;
+    }
 
     // public async deletar(idTatuador: string, idToken: string): Promise<TatuadorModel | false>{
     //     const tatuadorDeletado: TatuadorModel[] = await knex('tatuadores')

@@ -1,8 +1,10 @@
 import { UUID } from "crypto";
+import { Tatuador } from './tatuador.model'
 
 export interface PayloadToken {
     id: UUID;
     nome_usuario: string;
+    tatuador: Tatuador | null;
 }
 
 export interface DadosCadastrais {

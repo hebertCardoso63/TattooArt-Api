@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { usuarioService } from '../services/usuario.service'
+import { tatuadorService } from '../services/tatuador.service'
 import { DadosCadastrais, UsuarioModel, PayloadToken } from '../models/usuario.model';
 import { hashPassword, comparePassword } from '../utils/hash.util';
 import { generateToken } from '../utils/jwt.util';
@@ -46,9 +47,18 @@ export async function login(req: Request, res: Response) {
             return res.status(401).json({ mensagem: 'Credenciais inválidas', token: null });
         }
 
+        console.log(4545, user.id);
+
+        let tatuadorDados = await tatuadorService.buscarPorUsuarioId(user.id);
+
+        if (!tatuadorDados) {
+            tatuadorDados = null;
+        }
+        
         const payload: PayloadToken = {
             id: user.id,
             nome_usuario: user.nome,
+            tatuador: tatuadorDados,
         }
 
         const token = generateToken(payload);

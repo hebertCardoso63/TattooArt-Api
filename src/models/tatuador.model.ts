@@ -1,21 +1,22 @@
+import { UUID } from "crypto";
 export interface Tatuador {
-    id: string;
+    id: UUID;
     experiencia: number;
+    nome?: string;
     status?: string;
     tipo?: string;
     redes_sociais?: Record<string, string>;
-    data_criacao?: Date;
-    data_atualizacao?: Date;
     usuario_id: string;
     estudio_id?: string;
     imagem_perfil: string;
-    nome?: string;
     estilo_tatuagem?: string[];
     imagem_capa?: string;
+    data_criacao?: Date;
+    data_atualizacao?: Date;
 }
 
 export interface DadosCadastraisTatuador {
-    usuario_id: string;
+    usuario_id: UUID;
     nome: string;
     experiencia: number;
     status: string;
