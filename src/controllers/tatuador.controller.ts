@@ -54,10 +54,11 @@ class ControllerTatuador {
     }
 
     public async cadastrarTatuador(req: Request, res: Response, next: NextFunction) {
-        const usuario = req.usuario;
+        // const usuario = req.usuario;
+        // usuario_id: usuario?.id!,
 
         const dadosTatuador: DadosCadastraisTatuador = {
-            usuario_id: usuario?.id!,
+            usuario_id: req.body.usuario_id,
             nome: req.body.nome,
             experiencia: req.body.experiencia,
             status: req.body.status,

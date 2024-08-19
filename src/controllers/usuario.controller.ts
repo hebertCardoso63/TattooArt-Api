@@ -5,7 +5,7 @@ import { AtualizaPerfilInput } from '../types/usuario/atualiza-perfil.interface'
 class UsuarioController {
   public async getBuscarContaUsuario(request: Request, response: Response, next: NextFunction) {
     try {
-      const { id: userId } = request?.usuario!;
+      const userId = request.params.id;
 
       const serviceResponse = await usuarioService.buscaContaUsuario(userId);
 
@@ -17,7 +17,8 @@ class UsuarioController {
 
   public async deleteContaUsuario(request: Request, response: Response, next: NextFunction) {
     try {
-      const { id: userId } = request?.usuario!;
+      // const { id: userId } = request?.usuario!;
+      const userId = request.params.id;
 
       await usuarioService.excluiContaUsuario(userId);
 
@@ -31,7 +32,8 @@ class UsuarioController {
     try {
       const { body, usuario } = request;
 
-      const { id: userId } = usuario!;
+      // const { id: userId } = usuario!;
+      const userId = request.params.id;
       const input: AtualizaPerfilInput = body as AtualizaPerfilInput;
 
       const serviceResponse = await usuarioService.atualizaContaUsuario(userId, input);
