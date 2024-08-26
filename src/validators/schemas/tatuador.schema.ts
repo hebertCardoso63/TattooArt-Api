@@ -34,4 +34,7 @@ export const cadastrarTatuadorSchema = Joi.object({
     redes_sociais: Joi.object().optional().messages({
         'object.base': 'As redes sociais devem ser um objeto',
     }),
+    usuario_id: Joi.string().uuid().required().messages({
+        'string.guid': 'O ID do estúdio deve ser um UUID válido',
+    }),
 });
