@@ -16,7 +16,7 @@ export interface Tatuador {
 }
 
 export interface DadosCadastraisTatuador {
-    usuario_id: UUID;
+    usuario_id: string;
     nome: string;
     experiencia: number;
     status: string;
