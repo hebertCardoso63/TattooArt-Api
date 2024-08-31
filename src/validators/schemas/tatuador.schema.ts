@@ -22,9 +22,9 @@ export const cadastrarTatuadorSchema = Joi.object({
         'any.required': 'O tipo é obrigatório',
     }),
     estudio_id: Joi.string().uuid().optional().messages({
-        'string.guid': 'O ID do estúdio deve ser um UUID válido',
+        'string.uuid': 'O ID do estúdio deve ser um UUID válido',
     }),
-    imagem_perfil: Joi.string().uri().required().messages({
+    imagem_perfil: Joi.string().uri().messages({
         'string.uri': 'A imagem de perfil deve ser uma URL válida',
         'any.required': 'A imagem de perfil é obrigatória',
     }),
@@ -33,5 +33,8 @@ export const cadastrarTatuadorSchema = Joi.object({
     }),
     redes_sociais: Joi.object().optional().messages({
         'object.base': 'As redes sociais devem ser um objeto',
+    }),
+    usuario_id: Joi.string().uuid().required().messages({
+        'string.guid': 'O ID do estúdio deve ser um UUID válido',
     }),
 });
