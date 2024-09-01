@@ -10,14 +10,14 @@ class TatuagemController {
     constructor() {
         this.cadastrarTatuagem = this.cadastrarTatuagem.bind(this);
         this.listarTatuagens = this.listarTatuagens.bind(this);
-        // this.editarTatuagem = this.editarTatuagem.bind(this);
-        // this.buscarTatuagem = this.buscarTatuagem.bind(this);
-        // this.deletarTatuagem = this.deletarTatuagem.bind(this);
+        this.editarTatuagem = this.editarTatuagem.bind(this);
+        this.buscarTatuagem = this.buscarTatuagem.bind(this);
+        this.deletarTatuagem = this.deletarTatuagem.bind(this);
     }
 
     public async cadastrarTatuagem(req: Request, res: Response, next: NextFunction) {
         // const usuario = req.usuario;
-
+        console.log(req);
         const dadosTatuagem: inputCadastroTatuagem = {
             // criado_por: usuario?.id!,
             criado_por: req.body.user_id,
@@ -28,7 +28,7 @@ class TatuagemController {
             estilo: req.body.estilo,
             cliente_id: req.body.cliente_id,
             agendamento_id: req.body.agendamento_id,
-            tatuador_id: req.body.user_id,
+            tatuador_id: req.body.tatuador_id,
         };
 
         try {
@@ -68,14 +68,11 @@ class TatuagemController {
 
         const lista = await tatuagemService.buscarTatuagensPorTatuadorId(id);
 
-        console.log(lista);
-
         return res.status(200).json(lista);
     }
 
     public async deletarTatuagem(req: Request, res: Response) {
         const idTatuagen = req.params.id;
-        // const idToken = req.usuario?.id;
 
         const success = await tatuagemService.deletar(idTatuagen);
 
@@ -99,13 +96,13 @@ class TatuagemController {
         
     }
 
-    // public async buscarTatuagem(req: Request, res: Response, next: NextFunction) {
-    //     const tatuadorBuscado = await tatuagemService.buscarPorId(req.params.id);
+    public async buscarTatuagem(req: Request, res: Response, next: NextFunction) {
+        const tatuadorBuscado = await tatuagemService.getByIdTatuagem(req.params.id);
 
-    //     if (!tatuadorBuscado) return res.status(404).json({ message: "Tatuador não encontrado" });
+        if (!tatuadorBuscado) return res.status(404).json({ error: "Tatuador não encontrado" });
 
-    //     return res.status(200).json(tatuadorBuscado);
-    // }
+        return res.status(200).json(tatuadorBuscado);
+    }
 }
 
 export const tatuagemController = new TatuagemController();

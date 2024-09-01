@@ -12,8 +12,8 @@ const router = Router();
 
 router
     .use('/auth', validateAuth, auth)
-    .use('/api', tatuador)
-    .use('/api', usuario)
-    .use('/api', tatuagem);
+    .use('/api', authenticate, tatuador)
+    .use('/api', authenticate, usuario)
+    .use('/api', authenticate, tatuagem);
 
 export default router;

@@ -9,7 +9,6 @@ router
     .post(
         '/tatuagens',
         [
-            validateCadastroTatuagem,
             tatuagemController.cadastrarTatuagem,
             internalErrorsMiddleware,
         ]
@@ -21,13 +20,13 @@ router
             internalErrorsMiddleware,
         ]
     )
-    // .get(
-    //     '/tatuagens/:id', 
-    //     [
-    //         tatuagemController.getTatuagem,
-    //         internalErrorsMiddleware,
-    //     ]
-    // )
+    .get(
+        '/tatuagens/:id', 
+        [
+            tatuagemController.buscarTatuagem,
+            internalErrorsMiddleware,
+        ]
+    )
     .get(
         '/tatuagens/artist/:id', 
         [

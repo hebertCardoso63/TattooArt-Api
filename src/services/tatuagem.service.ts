@@ -55,8 +55,7 @@ class TatuagemService {
         const tatuagemDeletada: TatuagemModel[] = await knex('tatuagens')
             .where('id', idTatuagem)
             .update({data_exclusao: knex.fn.now() }, ['*'])
-
-        console.log(2323, tatuagemDeletada[0]);
+            
         if (!tatuagemDeletada) {
             return false;
         }
@@ -74,25 +73,28 @@ class TatuagemService {
         return tatuagem;
     }
 
-    // public async atualizarTatuador(idTatuador: string, novosDados: DadosCadastraisTatuador): Promise<TatuadorModel | false> {
-    //     const tatuador: TatuadorModel = await knex('tatuadores')
-    //         .where('id', idTatuador)
-    //         .update(novosDados, ['*']);
+    public async editarTatuagem(tatuagemId: string, novosDados: inputCadastroTatuagem): Promise<TatuagemModel | false> {
+        const tatuador: TatuagemModel = await knex('tatuagens')
+            .where('id', tatuagemId)
+            .update(novosDados, ['*']);
 
-    //     if (!tatuador) return false;
+        if (!tatuador) return false;
 
-    //     return tatuador;
-    // }
+        return tatuador;
+    }
 
-    // public async encontrarTatuador(nomeUsuario: string): Promise<TatuadorModel | false> {
-    //     const usuario: TatuadorModel = await knex('tatuadores')
-    //         .select(['*'])
-    //         .where('nome', nomeUsuario)
-    //         .first();
+    public async getByIdTatuagem(id: string): Promise<boolean | TatuagemModel> {
+        const tatuador = await knex('tatuagens')
+           .select(['*'])
+           .where('id', id)
+           .first();
 
-    //     if (!usuario) {
-    //         return false;
-    //     }
+        if (!tatuador) {
+            return false;
+        }
+
+        return tatuador;
+    }
 
     //     return usuario;
     // }

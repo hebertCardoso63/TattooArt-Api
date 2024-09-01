@@ -17,7 +17,7 @@ class ControllerTatuador {
 
         const success = await tatuadorService.deletar(idTatuador, idToken!);
 
-        if (!success) return res.status(400).send('Tatuador não encontrado')
+        if (!success) return res.status(400).json({ error: 'Tatuador não encontrado' })
 
         return res.status(200).json({ mensagem: 'Tatuador deletado', dados: success })
     }
@@ -36,11 +36,11 @@ class ControllerTatuador {
             params: { id },
         } = req as unknown as { body: DadosCadastraisTatuador; params: { id: string } };
         
-        if (!id) return res.status(400).json({ message: "ID do tatuador não fornecido" });
+        if (!id) return res.status(400).json({ error: "ID do tatuador não fornecido" });
 
         const tatuadorBuscado = await tatuadorService.atualizarTatuador(id, novosDados);
 
-        if (!tatuadorBuscado) return res.status(404).json({ message: "Tatuador não encontrado" });
+        if (!tatuadorBuscado) return res.status(404).json({ error: "Tatuador não encontrado" });
 
         return res.status(200).json(tatuadorBuscado);
     }
@@ -48,7 +48,7 @@ class ControllerTatuador {
     public async buscarTatuador(req: Request, res: Response, next: NextFunction) {
         const tatuadorBuscado = await tatuadorService.buscarPorId(req.params.id);
 
-        if (!tatuadorBuscado) return res.status(404).json({ message: "Tatuador não encontrado" });
+        if (!tatuadorBuscado) return res.status(404).json({ error: "Tatuador não encontrado" });
 
         return res.status(200).json(tatuadorBuscado);
     }
@@ -72,9 +72,9 @@ class ControllerTatuador {
         try {
             const idRegistro = await tatuadorService.cadastrar(dadosTatuador);
 
-            return res.status(201).json({ message: 'Tatuador cadastrado com sucesso', id_registro: idRegistro });
+            return res.status(201).json({ error: 'Tatuador cadastrado com sucesso', id_registro: idRegistro });
         } catch (err) {
-            return res.status(500).send('Erro ao cadastrar tatuador');
+            return res.status(500).send({ error: 'Erro ao cadastrar tatuador' });
         }
     }
 }
