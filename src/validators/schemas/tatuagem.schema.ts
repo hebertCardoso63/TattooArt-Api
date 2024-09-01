@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 export const cadastrarTatuagemSchema = Joi.object({
-    imagem: Joi.string().uri().required().messages({
+    imagem: Joi.string().required().messages({
         'string.uri': 'A imagem deve ser uma URL válida',
         'any.required': 'A imagem é obrigatória',
     }),
