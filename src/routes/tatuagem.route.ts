@@ -24,24 +24,30 @@ router
     // .get(
     //     '/tatuagens/:id', 
     //     [
-    //         tatuagemController.buscarTatuagem,
+    //         tatuagemController.getTatuagem,
     //         internalErrorsMiddleware,
     //     ]
     // )
-    // .patch(
-    //     '/tatuagens/:id', 
-    //     [
-    //         validateUsuariosAtualizarPerfil,
-    //         tatuagemController.editarTatuagem,
-    //         internalErrorsMiddleware,
-    //     ]
-    // )
-    // .delete(
-    //     '/tatuagens/:id',
-    //     [
-    //         tatuagemController.deletarTatuagem,
-    //         internalErrorsMiddleware,
-    //     ]
-    // );
+    .get(
+        '/tatuagens/artist/:id', 
+        [
+            tatuagemController.listarTatuagensByArtist,
+            internalErrorsMiddleware,
+        ]
+    )
+    .patch(
+        '/tatuagens/:id', 
+        [
+            tatuagemController.editarTatuagem,
+            internalErrorsMiddleware,
+        ]
+    )
+    .delete(
+        '/tatuagens/:id',
+        [
+            tatuagemController.deletarTatuagem,
+            internalErrorsMiddleware,
+        ]
+    );
 
 export default router;
