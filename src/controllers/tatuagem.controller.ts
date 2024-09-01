@@ -10,9 +10,9 @@ class TatuagemController {
     constructor() {
         this.cadastrarTatuagem = this.cadastrarTatuagem.bind(this);
         this.listarTatuagens = this.listarTatuagens.bind(this);
-        // this.editarTatuagem = this.editarTatuagem.bind(this);
-        // this.buscarTatuagem = this.buscarTatuagem.bind(this);
-        // this.deletarTatuagem = this.deletarTatuagem.bind(this);
+        this.editarTatuagem = this.editarTatuagem.bind(this);
+        this.buscarTatuagem = this.buscarTatuagem.bind(this);
+        this.deletarTatuagem = this.deletarTatuagem.bind(this);
     }
 
     public async cadastrarTatuagem(req: Request, res: Response, next: NextFunction) {
@@ -63,39 +63,39 @@ class TatuagemController {
         return res.status(200).json(lista);
     }
 
-    // public async deletarTatuagem(req: Request, res: Response) {
-    //     const idTatuador = req.params.id;
-    //     const idToken = req.usuario?.id;
+    public async deletarTatuagem(req: Request, res: Response) {
+        const idTatuador = req.params.id;
+        const idToken = req.usuario?.id;
 
-    //     const success = await tatuagemService.deletar(idTatuador, idToken!);
+        const success = await tatuagemService.excluirTatuagem(idTatuador, idToken!);
 
-    //     if (!success) return res.status(400).send('Tatuador não encontrado')
+        if (!success) return res.status(400).send('Tatuador não encontrado')
 
-    //     return res.status(200).json({ mensagem: 'Tatuador deletado', dados: success })
-    // }
+        return res.status(200).json({ mensagem: 'Tatuador deletado', dados: success })
+    }
 
-    // public async editarTatuagem(req: Request, res: Response) {
-    //     const {
-    //         body: novosDados,
-    //         params: { id },
-    //     } = req as unknown as { body: DadosCadastraisTatuador; params: { id: string } };
+    public async editarTatuagem(req: Request, res: Response) {
+        const {
+            body: novosDados,
+            params: { id },
+        } = req as unknown as { body: inputCadastroTatuagem; params: { id: string } };
         
-    //     if (!id) return res.status(400).json({ message: "ID do tatuador não fornecido" });
+        if (!id) return res.status(400).json({ error: "ID do tatuador não fornecido" });
 
-    //     const tatuadorBuscado = await tatuagemService.atualizarTatuador(id, novosDados);
+        const tatuadorBuscado = await tatuagemService.editarTatuagem(id, novosDados);
 
-    //     if (!tatuadorBuscado) return res.status(404).json({ message: "Tatuador não encontrado" });
+        if (!tatuadorBuscado) return res.status(404).json({ error: "Tatuador não encontrado" });
 
-    //     return res.status(200).json(tatuadorBuscado);
-    // }
+        return res.status(200).json(tatuadorBuscado);
+    }
 
-    // public async buscarTatuagem(req: Request, res: Response, next: NextFunction) {
-    //     const tatuadorBuscado = await tatuagemService.buscarPorId(req.params.id);
+    public async buscarTatuagem(req: Request, res: Response, next: NextFunction) {
+        const tatuadorBuscado = await tatuagemService.getByIdTatuagem(req.params.id);
 
-    //     if (!tatuadorBuscado) return res.status(404).json({ message: "Tatuador não encontrado" });
+        if (!tatuadorBuscado) return res.status(404).json({ error: "Tatuador não encontrado" });
 
-    //     return res.status(200).json(tatuadorBuscado);
-    // }
+        return res.status(200).json(tatuadorBuscado);
+    }
 }
 
 export const tatuagemController = new TatuagemController();

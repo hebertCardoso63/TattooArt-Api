@@ -9,7 +9,6 @@ router
     .post(
         '/tatuagens',
         [
-            validateCadastroTatuagem,
             tatuagemController.cadastrarTatuagem,
             internalErrorsMiddleware,
         ]
@@ -21,27 +20,26 @@ router
             internalErrorsMiddleware,
         ]
     )
-    // .get(
-    //     '/tatuagens/:id', 
-    //     [
-    //         tatuagemController.buscarTatuagem,
-    //         internalErrorsMiddleware,
-    //     ]
-    // )
-    // .patch(
-    //     '/tatuagens/:id', 
-    //     [
-    //         validateUsuariosAtualizarPerfil,
-    //         tatuagemController.editarTatuagem,
-    //         internalErrorsMiddleware,
-    //     ]
-    // )
-    // .delete(
-    //     '/tatuagens/:id',
-    //     [
-    //         tatuagemController.deletarTatuagem,
-    //         internalErrorsMiddleware,
-    //     ]
-    // );
+    .get(
+        '/tatuagens/:id', 
+        [
+            tatuagemController.buscarTatuagem,
+            internalErrorsMiddleware,
+        ]
+    )
+    .patch(
+        '/tatuagens/:id', 
+        [
+            tatuagemController.editarTatuagem,
+            internalErrorsMiddleware,
+        ]
+    )
+    .delete(
+        '/tatuagens/:id',
+        [
+            tatuagemController.deletarTatuagem,
+            internalErrorsMiddleware,
+        ]
+    );
 
 export default router;

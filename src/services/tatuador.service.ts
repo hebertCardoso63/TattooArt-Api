@@ -5,6 +5,7 @@ import {
 } from "../models/tatuador.model";
 
 class TatuadorService {
+
     private async verificarExistencia(nomeUsuario: string): Promise<boolean> {
         const usuario = await this.encontrarTatuador(nomeUsuario)
         
