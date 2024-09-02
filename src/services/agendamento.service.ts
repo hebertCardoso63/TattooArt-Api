@@ -20,6 +20,7 @@ class AgendamentoService {
     const tatuadores: AgendamentoModel[] = await knex('agendamentos')
       .select(['*'])
       .where('cliente_id', usuarioId)
+      .whereNull('data_cancelamento')
       .orderBy('data_criacao', 'desc');
 
     return tatuadores;
@@ -32,6 +33,13 @@ class AgendamentoService {
       .orderBy('data_criacao', 'desc');
 
     return tatuadores;
+  }
+  
+  public async cancelarAgendamento(agendamentoId: string, usuarioId: string): Promise<void> {
+    await knex('agendamentos')
+      .where('id', agendamentoId)
+      .andWhere('cliente_id', usuarioId)
+      .update({ data_cancelamento: knex.fn.now() });
   }
 }
 

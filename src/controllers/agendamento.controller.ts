@@ -5,8 +5,26 @@ import { InputCriacaoAgendamento } from '../types/agendamentos/input-criacao-age
 class AgendamentoController {
   constructor() {
     this.criarAgendamentoUsuario = this.criarAgendamentoUsuario.bind(this);
-    this.listarAgendamentoUsuario = this.listarAgendamentoUsuario.bind(this);
     this.listarAgendamentoTatuador = this.listarAgendamentoTatuador.bind(this);
+    this.listarAgendamentoUsuario = this.listarAgendamentoUsuario.bind(this)
+    this.cancelarAgendamento = this.cancelarAgendamento.bind(this);
+  }
+
+  public async cancelarAgendamento(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const usuario = req.usuario;
+    const agendamentoId = req.params.agendamento_id;
+
+    try {
+      await agendamentoService.cancelarAgendamento(agendamentoId, usuario?.id!);
+
+      return res.status(204).json();
+    } catch (error) {
+      next(error);
+    }
   }
 
   public async listarAgendamentoUsuario(
@@ -53,11 +71,9 @@ class AgendamentoController {
   ) {
     try {
 
-      const { cliente_id, ...resto } = req.body;
-
       const dadosAgendamento: InputCriacaoAgendamento = {
-        ...resto,
-        cliente_id,
+        ...req.body,
+        cliente_id: req.usuario?.id!,
       };
 
       const idRegistro = await agendamentoService.criarAgendamentoUsuario(dadosAgendamento);
