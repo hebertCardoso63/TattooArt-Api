@@ -5,7 +5,8 @@ import { InputCriacaoAgendamento } from '../types/agendamentos/input-criacao-age
 class AgendamentoController {
   constructor() {
     this.criarAgendamentoUsuario = this.criarAgendamentoUsuario.bind(this);
-    this.listarAgendamentoUsuario = this.listarAgendamentoUsuario.bind(this)
+    this.listarAgendamentoUsuario = this.listarAgendamentoUsuario.bind(this);
+    this.listarAgendamentoTatuador = this.listarAgendamentoTatuador.bind(this);
   }
 
   public async listarAgendamentoUsuario(
@@ -13,10 +14,29 @@ class AgendamentoController {
     res: Response,
     next: NextFunction,
   ) {
-    const usuario = req.usuario;
+    // const usuario = req.usuario;
+    const usuario = req.params.id;
 
     try {
-      const lista = await agendamentoService.obterAgendamentosUsuario(usuario?.id!);
+      const lista = await agendamentoService.obterAgendamentosUsuario(usuario);
+
+      if (lista.length === 0) return res.status(200).send([]);
+
+      return res.status(200).json(lista);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  public async listarAgendamentoTatuador(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const tatuador = req.params.id;
+
+    try {
+      const lista = await agendamentoService.obterAgendamentosTatuador(tatuador);
 
       if (lista.length === 0) return res.status(200).send([]);
 
@@ -33,9 +53,11 @@ class AgendamentoController {
   ) {
     try {
 
+      const { cliente_id, ...resto } = req.body;
+
       const dadosAgendamento: InputCriacaoAgendamento = {
-        ...req.body,
-        cliente_id: req.usuario?.id!,
+        ...resto,
+        cliente_id,
       };
 
       const idRegistro = await agendamentoService.criarAgendamentoUsuario(dadosAgendamento);

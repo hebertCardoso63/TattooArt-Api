@@ -66,15 +66,7 @@ class TatuagemController {
     public async listarTatuagensByArtist(req: Request, res: Response) {
         const { id } = req.params;
 
-        const lista = await tatuagemService.buscarTatuagensPorTatuadorId(id, "tudo");
-
-        return res.status(200).json(lista);
-    }
-
-    public async listarTatuagensAgendadadasByArtist(req: Request, res: Response) {
-        const { id } = req.params;
-
-        const lista = await tatuagemService.buscarTatuagensPorTatuadorId(id, 'agendadas');
+        const lista = await tatuagemService.buscarTatuagensPorTatuadorId(id);
 
         return res.status(200).json(lista);
     }

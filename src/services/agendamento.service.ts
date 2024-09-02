@@ -24,6 +24,15 @@ class AgendamentoService {
 
     return tatuadores;
   }
+
+  public async obterAgendamentosTatuador(tatuadorId: string): Promise<AgendamentoModel[]> {
+    const tatuadores: AgendamentoModel[] = await knex('agendamentos')
+      .select(['*'])
+      .where('tatuador_id', tatuadorId)
+      .orderBy('data_criacao', 'desc');
+
+    return tatuadores;
+  }
 }
 
 export const agendamentoService = new AgendamentoService();

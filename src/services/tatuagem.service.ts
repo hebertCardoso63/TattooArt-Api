@@ -38,25 +38,13 @@ class TatuagemService {
             return tatuagens;
     }
         
-    public async buscarTatuagensPorTatuadorId(id: string, tipo: String): Promise<TatuagemModel[] | false> {
+    public async buscarTatuagensPorTatuadorId(id: string): Promise<TatuagemModel[] | false> {
         
-        let tatuagens;
-
-        if (tipo === 'agendadas') {
-            tatuagens = await knex('tatuagens')
-                .select(['*'])
-                .where('tatuador_id', id)
-                .whereNotNull('agendamento_id')
-                .whereNotNull('cliente_id')
-                .whereNull('data_exclusao')
-                .orderBy('data_criacao', 'desc');
-        } else  {
-            tatuagens = await knex('tatuagens')
+        const tatuagens = await knex('tatuagens')
             .select(['*'])
             .where('tatuador_id', id)
             .whereNull('data_exclusao')
             .orderBy('data_criacao', 'desc');
-        }
     
         if (!tatuagens) {
             return false;
