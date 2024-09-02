@@ -11,8 +11,13 @@ const router = Router();
 
 router
   .get(
-    '/agendamentos-usuario',
+    '/agendamentos-usuario/:id',
     agendamentoController.listarAgendamentoUsuario,
+    internalErrorsMiddleware,
+  )
+  .get(
+    '/agendamentos-tatuador/:id',
+    agendamentoController.listarAgendamentoTatuador,
     internalErrorsMiddleware,
   )
   .post(

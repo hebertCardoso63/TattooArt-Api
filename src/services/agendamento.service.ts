@@ -26,6 +26,15 @@ class AgendamentoService {
     return tatuadores;
   }
 
+  public async obterAgendamentosTatuador(tatuadorId: string): Promise<AgendamentoModel[]> {
+    const tatuadores: AgendamentoModel[] = await knex('agendamentos')
+      .select(['*'])
+      .where('tatuador_id', tatuadorId)
+      .orderBy('data_criacao', 'desc');
+
+    return tatuadores;
+  }
+  
   public async cancelarAgendamento(agendamentoId: string, usuarioId: string): Promise<void> {
     await knex('agendamentos')
       .where('id', agendamentoId)
