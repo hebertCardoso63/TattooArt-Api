@@ -26,6 +26,12 @@ paths:
   /api/usuarios/perfil:
     $ref: ./paths/usuarios/perfil.yml
   /api/usuarios/excluir-perfil:
-    $ref: ./paths/usuarios/excluir-perfil.yml    
+    $ref: ./paths/usuarios/excluir-perfil.yml
   /api/usuarios/atualizar-perfil:
     $ref: ./paths/usuarios/atualizar-perfil.yml
+
+    # Agendamentos
+  /api/agendamento/usuario:
+    $ref: ./paths/agendamentos/criacao-agendamento-usuario.yml
+  /api/agendamentos/usuario:
+    $ref: ./paths/agendamentos/lista-agendamento-usuario.yml

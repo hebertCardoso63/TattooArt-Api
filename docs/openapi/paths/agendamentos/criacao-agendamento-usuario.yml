@@ -1,0 +1,14 @@
+post:
+  tags:
+    - Agendamento
+  summary: Cria um agendamento feito por um usuário comum
+  parameters:
+    - name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+  
+  responses:
+    "201":
+      description: Agendamento concluido com sucesso e retorna o id do agendamento
