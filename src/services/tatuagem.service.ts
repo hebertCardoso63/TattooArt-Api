@@ -21,7 +21,7 @@ class TatuagemService {
            .whereNull('data_exclusao')
            .orderBy('data_criacao', 'desc');
 
-        // if (usuarioId) {
+            // if (usuarioId) {
         //     tatuagens.where('criado_por', usuarioId);
         // }
         
@@ -34,22 +34,36 @@ class TatuagemService {
             // }
             
             // console.log(88, (await tatuagens).toString());
+            
             return tatuagens;
-        }
+    }
         
-        public async buscarTatuagensPorTatuadorId(id: string): Promise<TatuagemModel[] | false> {
-            const tatuagens = await knex('tatuagens')
+    public async buscarTatuagensPorTatuadorId(id: string, tipo: String): Promise<TatuagemModel[] | false> {
+        
+        let tatuagens;
+
+        if (tipo === 'agendadas') {
+            tatuagens = await knex('tatuagens')
                 .select(['*'])
                 .where('tatuador_id', id)
+                .whereNotNull('agendamento_id')
+                .whereNotNull('cliente_id')
                 .whereNull('data_exclusao')
                 .orderBy('data_criacao', 'desc');
-    
-            if (!tatuagens) {
-                return false;
-            }
-    
-            return tatuagens;
+        } else  {
+            tatuagens = await knex('tatuagens')
+            .select(['*'])
+            .where('tatuador_id', id)
+            .whereNull('data_exclusao')
+            .orderBy('data_criacao', 'desc');
         }
+    
+        if (!tatuagens) {
+            return false;
+        }
+
+        return tatuagens;
+    }
 
     public async deletar(idTatuagem: string): Promise<TatuagemModel | false>{
         const tatuagemDeletada: TatuagemModel[] = await knex('tatuagens')

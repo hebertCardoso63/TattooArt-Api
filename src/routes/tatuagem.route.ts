@@ -34,6 +34,13 @@ router
             internalErrorsMiddleware,
         ]
     )
+    .get(
+        '/tatuagens/artist/agendadas/:id', 
+        [
+            tatuagemController.listarTatuagensAgendadadasByArtist,
+            internalErrorsMiddleware,
+        ]
+    )
     .patch(
         '/tatuagens/:id', 
         [
