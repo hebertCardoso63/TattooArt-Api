@@ -19,6 +19,11 @@ router
     '/agendamento-usuario',
     agendamentoController.criarAgendamentoUsuario,
     internalErrorsMiddleware,
+  )
+  .delete(
+    '/agendamento-usuario/:agendamento_id',
+    agendamentoController.cancelarAgendamento,
+    internalErrorsMiddleware,
   );
 
 export default router;
