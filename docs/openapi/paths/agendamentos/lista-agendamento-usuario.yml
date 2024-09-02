@@ -1,0 +1,14 @@
+get:
+  tags:
+    - Agendamento
+  summary: Lista agendamentos de um usuário
+  parameters:
+    - name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+  
+  responses:
+    "200":
+      description: Retorna a lista de agendamentos
