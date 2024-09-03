@@ -2,6 +2,7 @@ import knex from '../factories/knex.factory';
 import {
   InputCriacaoAgendamento,
 } from '../types/agendamentos/input-criacao-agendamento.interface';
+import { HorarioDisponivel } from '../types/agendamentos/horario-disponivel.interface';
 import { AgendamentoModel } from '../models/agendamento.model';
 
 class AgendamentoService {
@@ -40,6 +41,41 @@ class AgendamentoService {
       .where('id', agendamentoId)
       .andWhere('cliente_id', usuarioId)
       .update({ data_cancelamento: knex.fn.now() });
+  }
+
+  public async obterDisponibilidadeTatuador(tatuadorId: string, diaConsulta: string): Promise<string[]> {
+    console.log(7878, diaConsulta);
+    // Buscar todos os agendamentos para o tatuador e data especificados
+    const agendamentos: AgendamentoModel[] = await knex('agendamentos')
+      .select(['data_inicio'])
+      .where('tatuador_id', tatuadorId)
+      .andWhereRaw('date(data_inicio) = ?', [diaConsulta]);
+
+    // Gerar todos os horários possíveis entre 08:00 e 18:00
+    const horariosPossiveis: HorarioDisponivel[] = this.gerarHorariosPossiveis();
+
+    // Extrair os horários ocupados dos agendamentos
+    const horariosOcupados = agendamentos.map((agendamento) =>
+      new Date(agendamento.data_inicio).toTimeString().substring(0, 5),
+    );
+
+    // Filtrar os horários disponíveis
+    const horariosDisponiveis = horariosPossiveis.filter(
+      (horario) => !horariosOcupados.includes(horario.hora),
+    );
+
+    const horariosDisponiveisFormatado = horariosDisponiveis.map((horario)=> horario.hora)
+
+    return horariosDisponiveisFormatado;
+  }
+
+  private gerarHorariosPossiveis(): HorarioDisponivel[] {
+    const horarios: HorarioDisponivel[] = [];
+    for (let hora = 8; hora <= 17; hora++) {
+      const horaString = hora.toString().padStart(2, '0') + ':00';
+      horarios.push({ hora: horaString });
+    }
+    return horarios;
   }
 }
 

@@ -86,6 +86,23 @@ class AgendamentoController {
       next(error);
     }
   }
+
+  public async listagemDisponibidadesTatuador(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const tatuadorId = req.params.tatuador_id;
+    const diaConsulta = req.query.dia_consulta as string;
+
+    try {
+      const agendamentosPossiveis = await agendamentoService.obterDisponibilidadeTatuador(tatuadorId, diaConsulta);
+
+      return res.status(200).json(agendamentosPossiveis);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export const agendamentoController = new AgendamentoController();

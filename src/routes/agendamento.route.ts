@@ -11,7 +11,12 @@ const router = Router();
 
 router
   .get(
-    '/agendamentos-usuario/:id',
+    '/disponibilidade-tatuador/:tatuador_id',
+    agendamentoController.listagemDisponibidadesTatuador,
+    internalErrorsMiddleware,
+  )
+  .get(
+    '/agendamentos-usuario',
     agendamentoController.listarAgendamentoUsuario,
     internalErrorsMiddleware,
   )

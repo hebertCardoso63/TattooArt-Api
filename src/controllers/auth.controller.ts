@@ -1,10 +1,31 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { usuarioService } from '../services/usuario.service'
 import { tatuadorService } from '../services/tatuador.service'
 import { DadosCadastrais, UsuarioModel, PayloadToken } from '../models/usuario.model';
 import { hashPassword, comparePassword } from '../utils/hash.util';
 import { generateToken } from '../utils/jwt.util';
 
+
+export async function validatePassword(req: Request, res: Response, next: NextFunction) {
+    const usuarioId = req.usuario?.id;
+    const senha: string = req.body.senha;
+
+    if (!senha) {
+        return res.status(400).json({ message: 'Nome de usuário e senha são obrigatórios' });
+    }
+
+    try {
+        const senhaValida = await usuarioService.validarSenha(usuarioId!, senha);
+
+        if (!senhaValida) {
+            return res.status(401).json({ message: 'A senha não é válida'});
+        }
+
+        return res.status(200).send({ message: 'Senha válida'});
+    } catch (error) {
+        next(error);
+    }
+}
 
 export async function register(req: Request, res: Response) {
     const { nome_usuario, senha } = req.body;

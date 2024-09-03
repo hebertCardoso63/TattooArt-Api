@@ -5,6 +5,7 @@ export interface AgendamentoModel {
     tamanho?: number;
     cor?: string;
     estilo?: string;
+    data_inicio: Date;
     data_criacao: Date;
     data_atualizacao: Date;
     data_exclusao: Date;
