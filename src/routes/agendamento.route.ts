@@ -34,6 +34,12 @@ router
     '/agendamento-usuario/:agendamento_id',
     agendamentoController.cancelarAgendamento,
     internalErrorsMiddleware,
+  )
+  .get(
+    '/agendamentos/',
+    agendamentoController.listarAgendamentos,
+    internalErrorsMiddleware,
   );
+  ;
 
 export default router;
