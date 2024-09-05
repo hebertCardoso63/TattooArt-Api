@@ -77,6 +77,14 @@ class AgendamentoService {
     }
     return horarios;
   }
+
+  public async obterAgendamentos(): Promise<AgendamentoModel[]> {
+    const agendamentos: AgendamentoModel[] = await knex('agendamentos')
+      .select(['*'])
+      .orderBy('data_criacao', 'desc');
+
+    return agendamentos;
+  }
 }
 
 export const agendamentoService = new AgendamentoService();

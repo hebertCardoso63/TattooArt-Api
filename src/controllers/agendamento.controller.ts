@@ -32,8 +32,8 @@ class AgendamentoController {
     res: Response,
     next: NextFunction,
   ) {
-    // const usuario = req.usuario;
-    const usuario = req.params.id;
+    
+    const usuario = req.usuario?.id!
 
     try {
       const lista = await agendamentoService.obterAgendamentosUsuario(usuario);
@@ -99,6 +99,20 @@ class AgendamentoController {
       const agendamentosPossiveis = await agendamentoService.obterDisponibilidadeTatuador(tatuadorId, diaConsulta);
 
       return res.status(200).json(agendamentosPossiveis);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  public async listarAgendamentos(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const agendamentos = await agendamentoService.obterAgendamentos();
+
+      return res.status(200).json(agendamentos);
     } catch (error) {
       next(error);
     }
