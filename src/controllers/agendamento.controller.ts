@@ -51,10 +51,10 @@ class AgendamentoController {
     res: Response,
     next: NextFunction,
   ) {
-    const tatuador = req.params.id;
+    const tatuadorId = req.params.id;
 
     try {
-      const lista = await agendamentoService.obterAgendamentosTatuador(tatuador);
+      const lista = await agendamentoService.obterAgendamentosTatuador(tatuadorId);
 
       if (lista.length === 0) return res.status(200).send([]);
 

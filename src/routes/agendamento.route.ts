@@ -1,9 +1,5 @@
 import { Router } from 'express';
 import { agendamentoController } from '../controllers/agendamento.controller';
-import {
-  validateTatuadorCadastro,
-  validateBuscarTatuador,
-} from '../validators/tatuador.validator';
 import { internalErrorsMiddleware } from '../middlewares/error.middleware';
 
 

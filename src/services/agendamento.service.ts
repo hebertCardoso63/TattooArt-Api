@@ -31,6 +31,7 @@ class AgendamentoService {
     const tatuadores: AgendamentoModel[] = await knex('agendamentos')
       .select(['*'])
       .where('tatuador_id', tatuadorId)
+      .whereNull('data_cancelamento')
       .orderBy('data_criacao', 'desc');
 
     return tatuadores;
