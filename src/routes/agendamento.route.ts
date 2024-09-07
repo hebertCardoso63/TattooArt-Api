@@ -21,6 +21,11 @@ router
     agendamentoController.listarAgendamentoTatuador,
     internalErrorsMiddleware,
   )
+  .get(
+    '/agendamentos/',
+    agendamentoController.listarAgendamentos,
+    internalErrorsMiddleware,
+  )
   .post(
     '/agendamento-usuario',
     agendamentoController.criarAgendamentoUsuario,
@@ -31,11 +36,6 @@ router
     agendamentoController.cancelarAgendamento,
     internalErrorsMiddleware,
   )
-  .get(
-    '/agendamentos/',
-    agendamentoController.listarAgendamentos,
-    internalErrorsMiddleware,
-  );
   ;
 
 export default router;
