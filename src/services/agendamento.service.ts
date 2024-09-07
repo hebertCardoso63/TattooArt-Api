@@ -40,7 +40,7 @@ class AgendamentoService {
   public async cancelarAgendamento(agendamentoId: string, usuarioId: string): Promise<void> {
     await knex('agendamentos')
       .where('id', agendamentoId)
-      .andWhere('cliente_id', usuarioId)
+      // .andWhere('cliente_id', usuarioId)
       .update({ data_cancelamento: knex.fn.now() });
   }
 
@@ -50,7 +50,8 @@ class AgendamentoService {
     const agendamentos: AgendamentoModel[] = await knex('agendamentos')
       .select(['data_inicio'])
       .where('tatuador_id', tatuadorId)
-      .andWhereRaw('date(data_inicio) = ?', [diaConsulta]);
+      .andWhereRaw('date(data_inicio) = ?', [diaConsulta])
+      .whereNull('data_cancelamento');
 
     // Gerar todos os horários possíveis entre 08:00 e 18:00
     const horariosPossiveis: HorarioDisponivel[] = this.gerarHorariosPossiveis();
@@ -86,6 +87,7 @@ class AgendamentoService {
 
     return agendamentos;
   }
+
 }
 
 export const agendamentoService = new AgendamentoService();
