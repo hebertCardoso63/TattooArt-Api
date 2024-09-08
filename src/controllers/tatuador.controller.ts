@@ -61,6 +61,7 @@ class ControllerTatuador {
             usuario_id: req.body.usuario_id,
             nome: req.body.nome,
             experiencia: req.body.experiencia,
+            endereco_atendimento: req.body.endereco_atendimento,
             status: req.body.status,
             tipo: req.body.tipo,
             imagem_perfil: req.body.imagem_perfil,
