@@ -1,6 +1,9 @@
 import Joi from 'joi';
 
 export const atualizarPerfilUsuarioSchema = Joi.object({
+  senha: Joi.string().optional().messages({
+    'string.empty': 'O nome não pode ser vazio',
+  }),
   nome: Joi.string().optional().messages({
     'string.empty': 'O nome não pode ser vazio',
   }),

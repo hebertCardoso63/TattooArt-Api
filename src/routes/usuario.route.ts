@@ -23,7 +23,6 @@ router
     .patch(
         '/usuarios/atualizar-perfil/:id', 
         [
-            validateUsuariosAtualizarPerfil,
             usuarioController.patchContaUsuario,
             internalErrorsMiddleware,
         ]

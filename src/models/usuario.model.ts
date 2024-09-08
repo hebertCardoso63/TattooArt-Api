@@ -8,14 +8,20 @@ export interface PayloadToken {
 }
 
 export interface DadosCadastrais {
-    nome: string;
+    nome?: string;
     senha: string;
+    nome_completo?: string;
+    email?: string;
+    rg?: string;
+    cpf?: string;
+    telefone_celular?: string;
 }
 
 export interface UsuarioModel {
     id: UUID;
     nome: string;
     senha: string;
+    nome_completo?: string;
     telefone_celular?: string;
     cpf?: string;
     rg?: string;

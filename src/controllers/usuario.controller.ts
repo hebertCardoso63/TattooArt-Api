@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { usuarioService } from '../services/usuario.service';
+import { hashPassword, comparePassword } from '../utils/hash.util';
 import { AtualizaPerfilInput } from '../types/usuario/atualiza-perfil.interface';
 
 class UsuarioController {
@@ -30,10 +31,19 @@ class UsuarioController {
 
   public async patchContaUsuario(request: Request, response: Response, next: NextFunction) {
     try {
-      const { body, usuario } = request;
+      const { body } = request;
 
-      // const { id: userId } = usuario!;
+      const senhaAtual= request.query?.senha! as string;
       const userId = request.params.id;
+  
+      if (senhaAtual &&!(await usuarioService.validarSenha(userId, senhaAtual))) {
+        return response.status(401).json({ error: 'Senha inválida.' });
+      }
+
+      const hashedPassword = await hashPassword(body.senha);
+
+      body.senha = hashedPassword;
+
       const input: AtualizaPerfilInput = body as AtualizaPerfilInput;
 
       const serviceResponse = await usuarioService.atualizaContaUsuario(userId, input);

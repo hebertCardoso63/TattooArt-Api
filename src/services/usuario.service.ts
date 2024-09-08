@@ -6,33 +6,14 @@ import { Usuario } from '../types/usuario/usuario.entity';
 import { comparePassword } from '../utils/hash.util';
 
 class UsuarioService {
-  public async validarSenha(usuarioId: string, senha: string): Promise<boolean> {
-    const usuario = await knex('usuarios')
-      .select(['*'])
-      .where('id', usuarioId)
-      .first();
-
-    console.log(usuario);
-    if (usuario && await comparePassword(senha, usuario.senha)) {
-      return true;
-    }
-    
-    return false;
-  }
-
-  private async verificarExistencia(nomeUsuario: string): Promise<boolean> {
-    const usuario = await this.encontrarUsuario(nomeUsuario)
-
-    if (!usuario) {
-      return false;
-    }
-
-    return true;
-  }
-  public async encontrarUsuario(nomeUsuario: string): Promise<UsuarioModel | false> {
+  public async validaCredenciais(
+    credencial: string,
+  ): Promise<UsuarioModel | false> {
     const usuario: UsuarioModel = await knex('usuarios')
       .select(['*'])
-      .where('nome', nomeUsuario)
+      .where((qb) => {
+        return qb.where('email', credencial).orWhere('nome', credencial);
+      })
       .whereNull('data_exclusao')
       .first();
 
@@ -43,8 +24,62 @@ class UsuarioService {
     return usuario;
   }
 
+  public async validarSenha(usuarioId: string, senha: string): Promise<boolean> {
+    const usuario = await knex('usuarios')
+      .select(['*'])
+      .where('id', usuarioId)
+      .first();
+
+    if (usuario && await comparePassword(senha, usuario.senha)) {
+      return true;
+    }
+    
+    return false;
+  }
+
+  private async verificarExistencia(dadosUsuario: DadosCadastrais): Promise<boolean> {
+    const usuario = await this.encontrarUsuario(dadosUsuario)
+
+    if (!usuario) {
+      return false;
+    }
+
+    return true;
+  }
+  public async encontrarUsuario(dados: DadosCadastrais): Promise<UsuarioModel | false> {
+    const query = knex('usuarios')
+      .select(['*']);
+  
+    console.log(4545, dados);
+
+    if (dados.nome) {
+      query.orWhere('nome', dados.nome);
+    }
+    if (dados.cpf) {
+      query.orWhere('cpf', dados.cpf);
+    }
+    if (dados.rg) {
+      query.orWhere('rg', dados.rg);
+    }
+    if (dados.email) {
+      query.orWhere('email', dados.email);
+    }
+    if (dados.telefone_celular) {
+      query.orWhere('telefone_celular', dados.telefone_celular);
+    }
+  
+    const usuario: UsuarioModel = await query.first();
+    console.log(9090, usuario);
+    if (!usuario) {
+      return false;
+    }
+  
+    return usuario;
+  }
+  
+
   public async cadastrar(dadosCadastrais: DadosCadastrais): Promise<number | false> {
-    const existe = await this.verificarExistencia(dadosCadastrais.nome);
+    const existe = await this.verificarExistencia(dadosCadastrais);
 
     if (existe) {
       return false;
@@ -92,7 +127,7 @@ class UsuarioService {
   }
 
   public async atualizaContaUsuario(
-    userId: string,
+    userId: string, 
     input: AtualizaPerfilInput,
   ): Promise<Usuario> {
     const query = knex({ u: 'usuarios' })
