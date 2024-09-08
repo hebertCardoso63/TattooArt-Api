@@ -5,5 +5,6 @@ export interface AtualizaPerfilInput {
     cpf?: string;
     rg?: string;
     endereco?: string;
+    senha?: string;
   }
   
