@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { tatuadorService } from "../services/tatuador.service";
+import { usuarioService } from "../services/usuario.service";
 import { DadosCadastraisTatuador, Tatuador } from "../models/tatuador.model";
 
 
@@ -54,12 +55,14 @@ class ControllerTatuador {
     }
 
     public async cadastrarTatuador(req: Request, res: Response, next: NextFunction) {
-        // const usuario = req.usuario;
-        // usuario_id: usuario?.id!,
+        const usuario_id = req.usuario?.id!;
+        const usuario = await usuarioService.buscaContaUsuario(usuario_id);
+        const nome_completo = usuario?.nome_completo ?? '';
+ 
 
         const dadosTatuador: DadosCadastraisTatuador = {
             usuario_id: req.body.usuario_id,
-            nome: req.body.nome,
+            nome: nome_completo,
             experiencia: req.body.experiencia,
             endereco_atendimento: req.body.endereco_atendimento,
             status: req.body.status,

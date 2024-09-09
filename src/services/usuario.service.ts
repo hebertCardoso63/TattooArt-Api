@@ -95,6 +95,7 @@ class UsuarioService {
     const response = await knex({ u: 'usuarios' })
       .select(
         'u.nome',
+        'u.nome_completo',
         'u.email',
         'u.cpf',
         'u.rg',
