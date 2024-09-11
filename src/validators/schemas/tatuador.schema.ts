@@ -37,4 +37,8 @@ export const cadastrarTatuadorSchema = Joi.object({
     usuario_id: Joi.string().uuid().required().messages({
         'string.guid': 'O ID do estúdio deve ser um UUID válido',
     }),
+    endereco_atendimento: Joi.string().required().messages({
+        'string.empty': 'O endereço de atendimento é obrigatório',
+        'any.required': 'O endereço de atendimento é obrigatório',
+    }),
 });

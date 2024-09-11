@@ -13,6 +13,7 @@ export interface Tatuador {
     imagem_capa?: string;
     data_criacao?: Date;
     data_atualizacao?: Date;
+    endereco_atendimento: string;
 }
 
 export interface DadosCadastraisTatuador {
@@ -26,4 +27,5 @@ export interface DadosCadastraisTatuador {
     estudio_id?: string;
     estilo_tatuagem?: string[];
     redes_sociais?: Record<string, string>;
+    endereco_atendimento: string;
 }

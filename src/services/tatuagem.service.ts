@@ -19,6 +19,7 @@ class TatuagemService {
         const tatuagens = await knex('tatuagens')
            .select(['*'])
            .whereNull('data_exclusao')
+           .whereNotNull('tatuador_id')
            .orderBy('data_criacao', 'desc');
 
             // if (usuarioId) {
